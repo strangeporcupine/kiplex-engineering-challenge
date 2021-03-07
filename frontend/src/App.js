@@ -14,7 +14,7 @@ function App() {
     <HashRouter>
         <h1>F1 Race Data</h1>
             <ul className="header">
-                <li><NavLink to="/">Home</NavLink></li>
+                <li><NavLink exact to="/">Home</NavLink></li>
                 <li><NavLink to="/averageLoops">Average Loop Times</NavLink></li>
                 <li><NavLink to="/trackSections">Track Section Times</NavLink></li>
             </ul>
