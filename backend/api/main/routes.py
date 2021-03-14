@@ -1,6 +1,6 @@
 from backend.db.model import Car, RaceEvent, RaceStatus, TrackPoint
 from backend.api.main import bp
-from flask import jsonify, request, current_app
+from flask import json, jsonify, request, current_app
 
 @bp.route('/get_section_time', methods=['GET'])
 def get_section_time():
@@ -10,7 +10,7 @@ def get_section_time():
     # Query for race_times
     race_time_query = RaceEvent.query
 
-    data = RaceEvent.to_collection_dict(race_time_query, page, per_page, 'main.get_time_spent')
+    data = RaceEvent.to_collection_dict(race_time_query, page, per_page, 'main.get_section_time')
     return jsonify(data)
 
 @bp.route('/get_section_time/<int:v_id>', methods=['GET'])
@@ -48,3 +48,18 @@ def get_section_time_by_car(v_id):
 @bp.route('/get_average_loop_time', methods=['GET'])
 def get_average_loop_time(v_id):
     pass
+
+@bp.route('get_cars', methods=['GET'])
+def get_cars():
+    cars = Car.query.with_entities(Car.version).distinct(Car.version)
+    return jsonify([c[0] for c in cars])
+
+@bp.route('get_track_section_types', methods=['GET'])
+def get_track_section_types():
+    track_points = TrackPoint.query.with_entities(TrackPoint.track_type).distinct(TrackPoint.track_type)
+    return jsonify([t[0] for t in track_points])
+
+@bp.route('get_status', methods=['GET'])
+def get_status():
+    status_types = RaceStatus.query.with_entities(RaceStatus.name).distinct(RaceStatus.name)
+    return jsonify([s[0] for s in status_types])

@@ -33,7 +33,7 @@ def add_race_data_to_db(db_engine, race_data):
         # Add car to database
         car_model = race_data[1]
         car_version = race_data[0]
-        car = Car.query.filter_by(model=car_model).first()
+        car = Car.query.filter_by(model=car_model, version=car_version).first()
         if car is None:
             car = Car(model=car_model, version=car_version)
             db_engine.session.add(car)
